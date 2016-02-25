@@ -1,0 +1,17 @@
+COMMON: &common
+  DEBUG: False
+  TESTING: False
+  SECRET_KEY: YouShouldNeverGuessWithIt
+
+DEVELOPMENT: &development
+  <<: *common
+  DEBUG: True
+
+PRODUCTION: &production
+  <<: *common
+  DEBUG: False
+  TESTING: False
+
+TESTING: &testing
+  <<: *common
+  TESTING: True

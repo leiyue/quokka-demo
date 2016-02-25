@@ -1,0 +1,28 @@
+# QuokaaApp
+Flask
+cached_property
+
+# script
+Flask-Script
+
+# config
+PyYAML
+
+# database
+Flask-MongoEngine
+
+# admin
+Flask-Admin
+
+# security
+Flask-Security
+
+# avatar
+Flask-Gravatar
+
+# utility
+slugify
+
+# quokka
+quokka-themes
+quokka-flask-htmlbuilder

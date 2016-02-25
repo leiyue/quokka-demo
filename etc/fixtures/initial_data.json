@@ -1,0 +1,15 @@
+{
+  "configs": [
+        {
+            "group": "settings",
+            "description": "App settings override CAUTION!!!",
+            "values": [
+               {
+                   "name": "EXAMPLE",
+                   "raw_value": "this_overwrite_the_value_in_settings",
+                   "formatter": "text"
+               }
+            ]
+        }
+    ]
+}
