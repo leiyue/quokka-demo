@@ -5,8 +5,11 @@ from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 
 import json
+import logging
 
 from ..core.models import Config, CustomValue
+
+logger = logging.getLogger()
 
 
 class Populate(object):
@@ -14,6 +17,8 @@ class Populate(object):
         self.db = db
         self.args = args
         self.kwargs = kwargs
+        self.json_data = {}
+        self.configs_data = {}
         self.custom_values = {}
         self.load_fixtures()
         self.app = self.kwargs.get('app')
@@ -26,7 +31,7 @@ class Populate(object):
 
     def load_fixtures(self):
         file_path = self.kwargs.get(
-            'filepath',
+            'file-path',
             './etc/fixtures/initial_data.json'
         )
         _file = open(file_path)
@@ -48,19 +53,7 @@ class Populate(object):
             return Config.objects.create(**data)
 
     def create_configs(self):
-        self.configs_data = [
-            {
-                "group": "settings",
-                "description": "App settings override CAUTION!!!",
-                "values": [
-                    {
-                        "name": "EXAMPLE",
-                        "raw_value": "this_overwrite_the_value_in_settings",
-                        "formatter": "text"
-                    }
-                ]
-            }
-        ]
+        self.configs_data = self.json_data.get('configs')
 
         for config in self.configs_data:
             config['values'] = [self.custom_value(**args)

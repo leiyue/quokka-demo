@@ -4,14 +4,13 @@
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 
-from .core import QuokkaApp
+from .core import QuokkaApp, models
 from .ext import configure_extensions
 
 
 def create_app_base(config=None, test=False, admin_instance=None, **settings):
     app = QuokkaApp(__name__)
     app.config.from_yaml('settings.yaml')
-
     app.config['MONGODB_SETTINGS'] = {
         'db': 'quokka_dev',
         'host': 'localhost',
@@ -33,4 +32,6 @@ def create_app(config=None, test=False, admin_instance=None, **settings):
         config=config, test=test, admin_instance=admin_instance, **settings
     )
     configure_extensions(app)
+    app.config.from_database(models)
+    app.config.to_database(models)
     return app

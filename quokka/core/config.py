@@ -8,20 +8,67 @@ import logging
 import os
 
 import yaml
+from cached_property import cached_property
 from flask import Config
 
-logger = logging.getLogger()
+from quokka.core.models import CustomValue
+
+logger = logging.getLogger('')
 
 
 class QuokkaConfig(Config):
+    @cached_property
+    def store(self):
+        return dict(self)
+
     def from_yaml(self, filename, silent=False):
         filename = os.path.join(self.root_path, filename)
-
-        with open(filename) as config_file:
-            c = yaml.load(config_file)
-
+        try:
+            with open(filename) as config_file:
+                c = yaml.load(config_file)
+        except Exception as e:
+            if silent:
+                return False
+            e.message = 'Unable to load ymal configuration: {0}'.format(
+                filename
+            )
+            raise
         env = os.environ.get('FLASK_ENV', 'DEVELOPMENT').upper()
         self['ENVIRONMENT'] = env.lower()
 
         c = c.get(env, c)
         self.update(c)
+
+    def from_database(self, models, silent=False):
+        if models:
+            try:
+                c = {
+                    item.name: item.value
+                    for item in models.Config.objects.get(group='settings').values
+                    }
+                self.update(c)
+            except Exception as e:
+                if silent:
+                    return False
+                logger.warning('Error reading settings from models: {0}'.format(e))
+                raise
+
+    def to_database(self, models, silent=False):
+        if models:
+            # try:
+            c = dict(self)
+            print(c)
+
+            s = models.Config.objects.get(group='settings').values
+            print(s)
+
+            print('*' * 20)
+            values = CustomValue(**c)
+            print(values)
+
+            s = models.Config.objects.get(group='settings').values
+            print(s)
+            # except Exception as e:
+            #     if silent:
+            #         return False
+            #     logger.warning('Error writing settings to models: {0}'.format(e))

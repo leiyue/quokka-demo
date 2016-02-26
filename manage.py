@@ -17,7 +17,7 @@ manager = Manager(app)
 
 @manager.command
 def populate():
-    Populate(db=db)
+    Populate(db=db)()
 
 
 def _make_context():
