@@ -4,6 +4,8 @@
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 
+import logging
+
 from flask.ext.script import Manager
 from flask.ext.script.commands import Shell, Server, Clean, ShowUrls
 
@@ -12,6 +14,15 @@ from quokka.core import db, models
 from quokka.utils import Populate
 
 app = create_app()
+if app.config.get("LOGGER_ENABLED"):
+    logging.basicConfig(
+        level=getattr(logging, app.config.get("LOGGER_LEVEL", "DEBUG")),
+        format=app.config.get(
+            "LOGGER_FORMAT",
+            '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'),
+        datefmt=app.config.get("LOGGER_DATE_FORMAT", '%m-%d %H:%M:%S')
+    )
+
 manager = Manager(app)
 
 

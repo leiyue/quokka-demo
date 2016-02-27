@@ -11,9 +11,7 @@ import yaml
 from cached_property import cached_property
 from flask import Config
 
-from quokka.core.models import CustomValue
-
-logger = logging.getLogger('')
+logger = logging.getLogger()
 
 
 class QuokkaConfig(Config):
@@ -57,17 +55,13 @@ class QuokkaConfig(Config):
         if models:
             # try:
             c = dict(self)
-            print(c)
+            print(id(logger))
+            logger.info(c)
 
             s = models.Config.objects.get(group='settings').values
-            print(s)
+            logger.info(s[0].name)
 
-            print('*' * 20)
-            values = CustomValue(**c)
-            print(values)
 
-            s = models.Config.objects.get(group='settings').values
-            print(s)
             # except Exception as e:
             #     if silent:
             #         return False
