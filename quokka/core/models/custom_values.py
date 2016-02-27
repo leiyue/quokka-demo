@@ -7,7 +7,7 @@ from __future__ import (absolute_import, division,
 import json
 
 from .. import db
-from ..admin import _l
+from ..admin.utils import _l
 
 
 def default_formatter(value):

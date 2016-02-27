@@ -7,6 +7,7 @@ from __future__ import (absolute_import, division,
 import json
 import logging
 
+from quokka.models import User, Role
 from ..core.models import Config, CustomValue
 
 logger = logging.getLogger()
@@ -17,8 +18,8 @@ class Populate(object):
         self.db = db
         self.args = args
         self.kwargs = kwargs
-        self.json_data = {}
-        self.configs_data = {}
+        self.roles = {}
+        self.users = {}
         self.custom_values = {}
         self.load_fixtures()
         self.app = self.kwargs.get('app')
@@ -27,6 +28,7 @@ class Populate(object):
         self.pipeline()
 
     def pipeline(self):
+        self.create_users()
         self.create_configs()
 
     def load_fixtures(self):
@@ -36,6 +38,30 @@ class Populate(object):
         )
         _file = open(file_path)
         self.json_data = json.load(_file)
+
+    def role(self, name):
+        if name not in self.roles:
+            try:
+                role = Role.objects.get(name=name)
+            except Role.DoesNotExist:
+                role = Role.objects.create(name=name)
+                logger.info('Created: Role {0}'.format(name))
+            self.roles[name] = role
+        return self.roles.get(name)
+
+    def create_user(self, data):
+        name = data.get('name')
+        if name not in self.users:
+            pwd = data.get('password')
+            data['roles'] = [self.role(role) for role in data.get('roles')]
+            user = User.create_user(**data)
+            logger.info('Created: User: {0} {1}'.format(user.email, pwd))
+            return user
+
+    def create_users(self, data=None):
+        self.users_data = data or self.json_data.get('users')
+        for user in self.users_data:
+            self.create_user(user)
 
     def custom_value(self, **data):
         if data.get('name') in self.custom_values:

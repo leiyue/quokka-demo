@@ -4,3 +4,4 @@
 from .app import QuokkaApp
 from .config import QuokkaConfig
 from .db import db
+from .cache import cache

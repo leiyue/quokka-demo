@@ -7,10 +7,24 @@ COMMON: &common
   LOGGER_LEVEL: DEBUG
   LOGGER_FORMAT: '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
   LOGGER_DATE_FORMAT: '%m-%d %H:%M:%S'
+  # Cache
+  CACHE_TYPE: simple
+  # Gravatar
+  GRAVATAR:
+    size: 100
+    rating: g
+    default: retro
+    force_default: False
+    orce_lower: False
 
 DEVELOPMENT: &development
   <<: *common
   DEBUG: True
+  MONGODB_DB: quokka_dev
+  MONGODB_HOST: localhost
+  MONGODB_PORT: 27017
+  MONGODB_USERNAME: null
+  MONGODB_PASSWORD: null
 
 PRODUCTION: &production
   <<: *common

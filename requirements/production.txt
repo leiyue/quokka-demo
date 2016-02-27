@@ -11,6 +11,16 @@ PyYAML
 # database
 Flask-MongoEngine
 
+# cache
+Flask-Cache
+
+# bable
+Flask-BabelEx
+
+# generic
+Flask-Mistune
+Flask-Gravatar
+
 # admin
 Flask-Admin
 

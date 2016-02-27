@@ -3,22 +3,17 @@
 
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
-import logging
 
 from .core import QuokkaApp, models
+from .core.admin import create_admin
 from .ext import configure_extensions
 
-logger = logging.getLogger()
+admin = create_admin()
 
 
 def create_app_base(config=None, test=False, admin_instance=None, **settings):
     app = QuokkaApp(__name__)
-    app.config.from_yaml('settings.yaml')
-    app.config['MONGODB_SETTINGS'] = {
-        'db': 'quokka_dev',
-        'host': 'localhost',
-        'port': 27017
-    }
+    app.config.load_config(config=config, test=test, **settings)
 
     if test or app.config.get('TESTING'):
         app.testing = True
@@ -34,8 +29,5 @@ def create_app(config=None, test=False, admin_instance=None, **settings):
     app = create_app_base(
         config=config, test=test, admin_instance=admin_instance, **settings
     )
-    configure_extensions(app)
-    logger.debug('test for logger')
-    app.config.from_database(models)
-    app.config.to_database(models)
+    configure_extensions(app, admin_instance or admin)
     return app
