@@ -3,9 +3,12 @@
 
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
+import logging
 
 from .core import QuokkaApp, models
 from .ext import configure_extensions
+
+logger = logging.getLogger()
 
 
 def create_app_base(config=None, test=False, admin_instance=None, **settings):
@@ -32,6 +35,7 @@ def create_app(config=None, test=False, admin_instance=None, **settings):
         config=config, test=test, admin_instance=admin_instance, **settings
     )
     configure_extensions(app)
+    logger.debug('test for logger')
     app.config.from_database(models)
     app.config.to_database(models)
     return app

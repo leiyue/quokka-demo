@@ -19,7 +19,8 @@ if app.config.get("LOGGER_ENABLED"):
         level=getattr(logging, app.config.get("LOGGER_LEVEL", "DEBUG")),
         format=app.config.get(
             "LOGGER_FORMAT",
-            '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'),
+            '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+        ),
         datefmt=app.config.get("LOGGER_DATE_FORMAT", '%m-%d %H:%M:%S')
     )
 
