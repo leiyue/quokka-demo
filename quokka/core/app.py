@@ -4,9 +4,9 @@
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 
-from flask import Flask
+from flask import Flask, Blueprint
 
-from .config import QuokkaConfig
+from quokka.core.config import QuokkaConfig
 
 
 class QuokkaApp(Flask):
@@ -17,3 +17,9 @@ class QuokkaApp(Flask):
         if instance_relative:
             root_path = self.instance_path
         return self.config_class(root_path, self.default_config)
+
+
+class QuokkaModule(Blueprint):
+    def __init__(self, name, *args, **kwargs):
+        name = "quokka.modules." + name
+        super(QuokkaModule, self).__init__(name, *args, **kwargs)

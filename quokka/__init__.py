@@ -4,9 +4,9 @@
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 
-from .core import QuokkaApp, models
-from .core.admin import create_admin
-from .ext import configure_extensions
+from quokka.core.admin import create_admin
+from quokka.core.app import QuokkaApp
+from quokka.ext import configure_extensions
 
 admin = create_admin()
 

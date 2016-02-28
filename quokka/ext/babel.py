@@ -4,7 +4,7 @@
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 
-from flask.ext.babelex import Babel
+from flask.ext.babel import Babel
 
 babel = Babel()
 

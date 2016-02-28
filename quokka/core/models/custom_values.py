@@ -6,8 +6,8 @@ from __future__ import (absolute_import, division,
 
 import json
 
-from .. import db
-from ..admin.utils import _l
+from quokka.core.admin.utils import _l
+from quokka.core.db import db
 
 
 def default_formatter(value):

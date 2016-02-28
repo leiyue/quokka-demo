@@ -7,9 +7,6 @@ from __future__ import (absolute_import, division,
 import json
 import logging
 
-from quokka.models import User, Role
-from ..core.models import Config, CustomValue
-
 logger = logging.getLogger()
 
 
@@ -40,6 +37,8 @@ class Populate(object):
         self.json_data = json.load(_file)
 
     def role(self, name):
+        from quokka.modules import Role
+
         if name not in self.roles:
             try:
                 role = Role.objects.get(name=name)
@@ -50,6 +49,8 @@ class Populate(object):
         return self.roles.get(name)
 
     def create_user(self, data):
+        from quokka.modules import User
+
         name = data.get('name')
         if name not in self.users:
             pwd = data.get('password')
@@ -64,6 +65,8 @@ class Populate(object):
             self.create_user(user)
 
     def custom_value(self, **data):
+        from ..core.models import CustomValue
+
         if data.get('name') in self.custom_values:
             return self.custom_values[data.get('name')]
 
@@ -73,6 +76,8 @@ class Populate(object):
 
     @staticmethod
     def create_config(data):
+        from ..core.models import Config
+
         try:
             return Config.objects.get(group=data.get('group'))
         except:

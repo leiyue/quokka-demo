@@ -6,7 +6,7 @@ from __future__ import (absolute_import, division,
 
 from flask.ext.mongoengine import MongoEngine
 
-from .fields import ListField
+from quokka.core.fields import ListField
 
 db = MongoEngine()
 db.ListField = ListField

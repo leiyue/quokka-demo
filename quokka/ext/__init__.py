@@ -5,8 +5,9 @@ from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 
 from quokka.core.admin import configure_admin
-from . import (logger, babel, themes, context_processors, security)
-from ..core import db, cache
+from quokka.core.cache import cache
+from quokka.core.db import db
+from . import (logger, babel, themes, context_processors, security, blueprints)
 
 
 def configure_extensions(app, admin):
@@ -18,6 +19,7 @@ def configure_extensions(app, admin):
     context_processors.configure(app)
     security.configure(app, db)
     configure_admin(app, admin)
+    blueprints.load_form_folder(app)
     return app
 
 

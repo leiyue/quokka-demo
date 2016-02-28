@@ -4,7 +4,7 @@
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 
-from quokka.core.models import Config
+from quokka.core.models.config import Config
 
 
 def configure(app):

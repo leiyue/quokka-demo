@@ -10,7 +10,7 @@ import random
 from flask.ext.security import RoleMixin, UserMixin
 from flask.ext.security.utils import encrypt_password
 
-from quokka.core import db
+from quokka.core.db import db
 from quokka.utils.text import slugify
 
 logger = logging.getLogger()

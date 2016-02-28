@@ -15,7 +15,7 @@ Flask-MongoEngine
 Flask-Cache
 
 # bable
-Flask-BabelEx
+Flask-Babel
 
 # generic
 Flask-Mistune

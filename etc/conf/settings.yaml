@@ -9,6 +9,9 @@ COMMON: &common
   LOGGER_DATE_FORMAT: '%m-%d %H:%M:%S'
   # Cache
   CACHE_TYPE: simple
+  # Babel
+  BABEL_LANGUAGES: ['zh_Hans_CN', 'en']
+  BABEL_DEFAULT_LOCALE: zh_Hans_CN
   # Gravatar
   GRAVATAR:
     size: 100

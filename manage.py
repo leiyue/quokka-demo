@@ -11,7 +11,7 @@ from flask.ext.script.commands import Shell, Server, Clean, ShowUrls
 
 from quokka import create_app
 from quokka.core import db, models
-from quokka.utils import Populate
+from quokka.utils.populate import Populate
 
 app = create_app()
 if app.config.get("LOGGER_ENABLED"):

@@ -6,9 +6,9 @@ from __future__ import (absolute_import, division,
 
 from flask import current_app
 
+from quokka.core.db import db
 from quokka.core.fields import MultipleObjectsReturned
-from .custom_values import HasCustomValue
-from .. import db
+from quokka.core.models.custom_values import HasCustomValue
 
 
 class Config(HasCustomValue, db.DynamicDocument):

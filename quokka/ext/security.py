@@ -9,7 +9,7 @@ from flask.ext.security import Security
 
 
 def configure(app, db):
-    from ..models import User, Role
+    from quokka.modules.accounts.models import User, Role
     app.security = Security(
         app=app,
         datastore=MongoEngineUserDatastore(db, User, Role),
