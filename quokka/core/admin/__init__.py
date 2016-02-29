@@ -6,6 +6,7 @@ from __future__ import (absolute_import, division,
 
 import logging
 
+from flask import session, request
 from flask.ext.admin import Admin
 from flask.ext.admin.contrib.mongoengine import ModelView
 
@@ -29,7 +30,29 @@ def create_admin(app=None):
 
 
 def configure_admin(app, admin):
-    if admin.app is None:
-        admin.init_app(app)
+    babel = app.extensions.get('babel')
+    if babel:
+        try:
+            @babel.localeselector
+            def get_locale():
+                # use default language if set
+                if app.config.get('BABEL_DEFAULT_LOCALE'):
+                    session['lang'] = app.config.get('BABEL_DEFAULT_LOCALE')
+                else:
+                    # get best matching language
+                    if app.config.get('BABEL_LANGUAGES'):
+                        session['lang'] = request.accept_languages.best_match(
+                            app.config.get('BABEL_LANGUAGES')
+                        )
+
+                return session.get('lang', 'en')
+
+            admin.locale_selector(get_locale)
+            app.logger.info(session.get('lang'))
+        except Exception as e:
+            app.logger.info('Cannot add locale_selector. %s' % e)
+
+            if admin.app is None:
+                admin.init_app(app)
 
     return admin
