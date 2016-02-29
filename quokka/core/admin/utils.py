@@ -4,7 +4,7 @@
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 
-from flask.ext.babel import ngettext, lazy_gettext, gettext
+from flask.ext.admin.babel import ngettext, lazy_gettext, gettext
 
 
 def _(*args, **kwargs):

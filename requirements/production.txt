@@ -1,3 +1,8 @@
+# quokka
+quokka-flask-admin
+quokka-themes
+quokka-flask-htmlbuilder
+
 # QuokaaApp
 Flask
 cached_property
@@ -21,9 +26,6 @@ Flask-Babel
 Flask-Mistune
 Flask-Gravatar
 
-# admin
-Flask-Admin
-
 # security
 Flask-Security
 
@@ -33,6 +35,3 @@ Flask-Gravatar
 # utility
 slugify
 
-# quokka
-quokka-themes
-quokka-flask-htmlbuilder
